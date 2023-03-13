@@ -1,1 +1,18 @@
 {% extends "base.html" %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+{% for card in cards %}
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">{{card.title}}</h5>
+    <p class="card-text">{{card.description}}</p>
+    <img src="{{card.image.url}}" class="img-fluid" alt="...">
+    <p class="card-text"><small class="text-muted">Uploaded on: {{card.date_created}}</small></p>
+  </div>
+
+</div>
+{% endfor %}
+{% endblock %}
+
