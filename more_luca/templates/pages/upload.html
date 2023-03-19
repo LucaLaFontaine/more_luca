@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Upload{% endblock title %}
+
+{% block content %}
+<form action="/your-name/" method="post">
+    <label for="post_title">Title: </label>
+    <input id="post_title" type="text" name="post_title" value="{{ current_name }}">
+    <input type="submit" value="OK">
+</form>
+{% endblock %}
+

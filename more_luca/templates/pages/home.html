@@ -3,16 +3,61 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-{% for card in cards %}
-<div class="card">
-  <div class="card-body">
-    <h5 class="card-title">{{card.title}}</h5>
-    <p class="card-text">{{card.description}}</p>
-    <img src="{{card.image.url}}" class="img-fluid" alt="...">
-    <p class="card-text"><small class="text-muted">Uploaded on: {{card.date_created}}</small></p>
-  </div>
+  {% for card in cards %}
+<!--<div class="card">-->
+<!--  <div class="card-body">-->
+<!--    <h5 class="card-title">{{card.title}}</h5>-->
+<!--    <p class="card-text">{{card.description}}</p>-->
+<!--    {% for photo in card.photos.all %}-->
+<!--      <img src="{{photo.image.url}}" class="img-fluid" alt="...">-->
+<!--    {% endfor %}-->
+<!--    <p class="card-text"><small class="text-muted">Uploaded on: {{card.date_created}}</small></p>-->
+<!--  </div>-->
 
-</div>
-{% endfor %}
+<!--</div>-->
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{card.title}}</h5>
+        <p class="card-text">{{card.description}}</p>
+      <div id="carousel{{forloop.counter0}}" class="carousel slide" data-interval="False">
+        <ol class="carousel-indicators">
+          {% for photo in card.photos.all %}
+            {% if forloop.first %}
+              <li data-bs-target="#carousel{{forloop.parentloop.counter0}}" class="active" data-bs-slide-to="{{ forloop.counter0 }}"></li>
+            {% else %}
+              <li data-bs-target="#carousel{{forloop.parentloop.counter0}}" data-bs-slide-to="{{ forloop.counter0 }}"></li>
+            {% endif %}
+          {% endfor %}
+        </ol>
+        <div class="carousel-inner">
+          {% for photo in card.photos.all %}
+            {% if forloop.first %}
+              <div class="carousel-item active">
+                <img class="d-block w-100" src="{{photo.image.url}}" alt="First slide">
+              </div>
+            {% else %}
+              <div class="carousel-item">
+                <img class="d-block w-100" src="{{photo.image.url}}" alt="Second slide">
+              </div>
+            {% endif %}
+          {% endfor %}
+      <!--    <div class="carousel-item">-->
+      <!--      <img class="d-block w-100" src="..." alt="Third slide">-->
+      <!--    </div>-->
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{forloop.counter0}}" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carousel{{forloop.counter0}}" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+      <p class="card-text"><small class="text-muted">Uploaded on: {{card.date_created}}</small></p>
+    </div>
+
+<!--</div>-->
+
+  {% endfor %}
 {% endblock %}
 
